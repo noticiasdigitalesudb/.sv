@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+		<html lang="es" class="scroll-smooth">
+		<head>
+			<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+			<title>UDB NOTICIAS | Periódico Digital</title>
+
+			<!-- Google Fonts: Roboto única -->
+			<link rel="preconnect" href="https://fonts.googleapis.com">
+			<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+			<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400&display=swap" rel="stylesheet">
+
+			<!-- Tailwind CSS -->
+			<script src="https://cdn.tailwindcss.com"></script>
+
+			<!-- Phosphor Icons para iconografía moderna -->
+			<script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+			<!-- Configuración de Tailwind Personalizada -->
+			<script>
+				tailwind.config = {
+					theme: {
+						extend: {
+							colors: {
+								udb: {
+									blue: '#0833a2',
+									yellow: '#FFFF00',
+									gold: '#D4AF37',
+									white: '#FFFFFF',
+									black: '#000000'
+								}
+							},
+							fontFamily: {
+								sans: ['Roboto', 'sans-serif'],
+							}
+						}
+					}
+				}
+			</script>
+
+			<style>
+				/* Animaciones para el Scroll (Intersection Observer) */
+				.reveal {
+					opacity: 0;
+					transform: translateY(40px);
+					transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+				}
+				.reveal.active {
+					opacity: 1;
+					transform: translateY(0);
+				}
+
+				/* Estilos de Modal */
+				.article-modal {
+					transition: opacity 0.3s ease, visibility 0.3s ease;
+				}
+				.article-modal.hidden-modal {
+					opacity: 0;
+					visibility: hidden;
+					pointer-events: none;
+				}
+				.article-modal.active-modal {
+					opacity: 1;
+					visibility: visible;
+					pointer-events: auto;
+				}
+				.modal-content {
+					transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+					transform: scale(0.95) translateY(20px);
+				}
+				.article-modal.active-modal .modal-content {
+					transform: scale(1) translateY(0);
+				}
+
+				/* Scrollbar estilizada */
+				::-webkit-scrollbar {
+					width: 8px;
+				}
+				::-webkit-scrollbar-track {
+					background: #f1f5f9; 
+				}
+				::-webkit-scrollbar-thumb {
+					background: #0833a2; 
+					border-radius: 4px;
+				}
+				::-webkit-scrollbar-thumb:hover {
+					background: #06267a; 
+				}
+			</style>
+			<link href="style.css" rel="stylesheet" type="text/css">
+        </head>
+		<body class="bg-gray-100 text-udb-black font-sans antialiased flex flex-col min-h-screen pt-[120px]">
+
+			<!-- HEADER FIJO -->
+			<header class="bg-udb-blue text-udb-white fixed w-full top-0 z-50 shadow-lg transition-all duration-300" id="main-header">
+
+				<!-- Main Navigation -->
+				<div class="max-w-7xl mx-auto px-4 py-4">
+					<div class="flex flex-wrap justify-between items-center gap-4">
+
+						<!-- Logo y Título -->
+						<a href="#inicio" class="flex items-center gap-4 group">
+							<div class="bg-udb-white p-1 rounded-md shadow-md h-16 w-16 flex items-center justify-center overflow-hidden flex-shrink-0">
+
+								<img src="logo und.jpg" alt="Logo UDB" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0833a2?text=UDB'">
+							</div>
+							<div class="flex flex-col">
+								<span class="font-black text-[25px] tracking-tight uppercase text-udb-white group-hover:text-udb-yellow transition-colors">UDB NOTICIAS</span>
+								<span class="text-[12px] text-udb-white/80 uppercase tracking-widest mt-1">Periódico Digital · Universidad Don Bosco</span>
+							</div>
+						</a>
+
+						<!-- Desktop Menu & Search -->
+						<div class="hidden lg:flex items-center gap-6">
+							<nav class="flex items-center gap-6 font-bold text-[14px]">
+								<a href="#inicio" class="text-udb-white hover:text-udb-yellow transition-colors">INICIO</a>
+								<a href="#actualidad" class="text-udb-white hover:text-udb-yellow transition-colors">ACTUALIDAD</a>
+								<a href="#deportes" class="text-udb-white hover:text-udb-yellow transition-colors">DEPORTES</a>
+								<a href="#cultura" class="text-udb-white hover:text-udb-yellow transition-colors">CULTURA</a>
+								<a href="#opinion" class="text-udb-white hover:text-udb-yellow transition-colors">OPINIÓN</a>
+							</nav>
+
+							<!-- Buscador Interactivo Desktop -->
+							<div class="relative ml-4">
+								<input type="text" placeholder="Buscar..." class="search-input bg-udb-blue border border-udb-white/50 text-udb-white text-[14px] rounded-full px-4 py-1.5 focus:outline-none focus:border-udb-yellow focus:ring-1 focus:ring-udb-yellow placeholder-udb-white/60 w-48 transition-all">
+								<i class="ph ph-magnifying-glass absolute right-3 top-1/2 -translate-y-1/2 text-udb-white/60 pointer-events-none"></i>
+							</div>
+						</div>
+
+						<!-- Mobile Toggle -->
+						<button id="mobile-menu-btn" class="lg:hidden text-udb-white hover:text-udb-yellow transition-colors" aria-label="Menú">
+							<i class="ph ph-list text-3xl"></i>
+						</button>
+					</div>
+				</div>
+
+				<!-- Mobile Menu Overlay -->
+				<div id="mobile-menu" class="hidden bg-udb-blue absolute w-full left-0 border-t border-udb-white/20 shadow-xl">
+					<div class="p-4">
+						<div class="relative mb-4">
+							<!-- Buscador Interactivo Móvil -->
+							<input type="text" placeholder="Buscar noticias..." class="search-input w-full bg-white/10 border border-udb-white/30 text-udb-white text-[14px] rounded px-4 py-2 focus:outline-none focus:border-udb-yellow">
+						</div>
+						<nav class="flex flex-col text-[14px] font-bold">
+							<a href="#inicio" class="py-3 border-b border-white/10 text-udb-white hover:text-udb-yellow">INICIO</a>
+							<a href="#actualidad" class="py-3 border-b border-white/10 text-udb-white hover:text-udb-yellow">ACTUALIDAD</a>
+							<a href="#deportes" class="py-3 border-b border-white/10 text-udb-white hover:text-udb-yellow">DEPORTES</a>
+							<a href="#cultura" class="py-3 border-b border-white/10 text-udb-white hover:text-udb-yellow">CULTURA</a>
+							<a href="#opinion" class="py-3 text-udb-white hover:text-udb-yellow">OPINIÓN</a>
+						</nav>
+					</div>
+				</div>
+			</header>
+
+			<!-- MAIN CONTENT -->
+			<main class="flex-grow max-w-7xl mx-auto px-4 py-8 w-full">
+
+				<!-- Noticia Principal (Hero) -->
+				<section id="inicio" class="mb-12 reveal searchable-item">
+					<div class="grid grid-cols-1 lg:grid-cols-12 gap-0 bg-udb-white rounded-xl overflow-hidden shadow-md group cursor-pointer" onclick="openModal('modal-1')">
+						<!-- Imagen Hero -->
+						<div class="lg:col-span-8 overflow-hidden relative h-72 lg:h-auto min-h-[450px]">
+							<span class="absolute top-4 left-4 bg-udb-gold text-udb-black text-[12px] font-bold px-3 py-1 rounded-sm uppercase tracking-wide z-10 shadow-md">
+								SUCESOS · EL SALVADOR
+							</span>
+							<!-- Animación de imagen añadida aquí -->
+							<img src="img/imagen 1.png" alt="Accidente" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"/>
+							<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent lg:hidden z-0"></div>
+						</div>
+
+						<!-- Contenido Hero -->
+						<div class="lg:col-span-4 p-8 flex flex-col justify-center bg-udb-white relative z-10 lg:pl-10 lg:-ml-6 rounded-l-2xl shadow-[-10px_0_15px_-3px_rgba(0,0,0,0.1)]">
+							<h1 class="text-[40px] font-black text-udb-black leading-tight mb-4 group-hover:text-udb-blue transition-colors">
+								Fatal accidente de tránsito en el boulevard Constitución deja 2 fallecidos y al menos 13 lesionados
+							</h1>
+							<p class="text-[14px] text-gray-600 mb-6 line-clamp-3">
+								Un trágico suceso colapsó una de las principales arterias de la capital la mañana de este miércoles, cuando un vehículo de carga pesada perdió el control embistiendo a múltiples automóviles en su trayecto.
+							</p>
+							<div class="flex items-center gap-3 mt-auto pt-4 border-t border-gray-200">
+								<div>
+									<p class="text-[14px] font-bold text-udb-blue uppercase">Samuel Rivera</p>
+									<p class="text-[12px] text-gray-500">30 de septiembre de 2026</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<!-- Layout Grid: Noticias Secundarias + Sidebar -->
+				<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+					<!-- Contenido Principal (Noticias Secundarias) -->
+					<div class="lg:col-span-8" id="actualidad">
+						<div class="flex items-center justify-between border-b-[3px] border-udb-blue pb-2 mb-6 reveal">
+							<h2 class="text-[25px] font-black text-udb-black uppercase tracking-tight">Últimas Noticias</h2>
+						</div>
+
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+							<!-- Tarjeta 1 (Apopa) -->
+							<article class="searchable-item bg-udb-white rounded-xl overflow-hidden shadow-md group reveal flex flex-col h-full cursor-pointer" onclick="openModal('modal-2')">
+								<div class="relative h-56 overflow-hidden">
+									<span class="absolute top-3 left-3 bg-red-600 text-udb-white text-[12px] font-bold px-2 py-1 rounded-sm uppercase tracking-wider z-10">SUCESOS · APOPA</span>
+									<!-- Animación en la imagen -->
+									<img src="img/imagen 3.png" alt="Accidente vial" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"/>
+								</div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h3 class="text-[25px] font-bold text-udb-black mb-3 leading-snug group-hover:text-udb-blue transition-colors">
+										Juzgado de paz en Apopa ordena medidas sustitutivas en caso de accidente vial
+									</h3>
+									<div class="text-[12px] text-gray-500 font-medium pt-3 border-t border-gray-100 mt-auto flex justify-between items-center uppercase">
+										<span class="font-bold text-udb-blue">Àngela Zaldaña</span>
+										<span>30 de septiembre de 2026</span>
+									</div>
+								</div>
+							</article>
+
+							<!-- Tarjeta 2 (FMI) -->
+							<article class="searchable-item bg-udb-white rounded-xl overflow-hidden shadow-md group reveal flex flex-col h-full cursor-pointer" onclick="openModal('modal-3')">
+								<div class="relative h-56 overflow-hidden">
+									<span class="absolute top-3 left-3 bg-green-600 text-udb-white text-[12px] font-bold px-2 py-1 rounded-sm uppercase tracking-wider z-10">ECONOMÍA</span>
+									<!-- Animación en la imagen -->
+									<img src="img/imagen 5.PNG" alt="FMI" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"/>
+								</div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h3 class="text-[25px] font-bold text-udb-black mb-3 leading-snug group-hover:text-udb-blue transition-colors">
+										El FMI lleva a cabo el acuerdo financiero en El Salvador para este trimestre
+									</h3>
+									<div class="text-[12px] text-gray-500 font-medium pt-3 border-t border-gray-100 mt-auto flex justify-between items-center uppercase">
+										<span class="font-bold text-udb-blue">Anderson Villanueva</span>
+										<span>22 Octubre 2026</span>
+									</div>
+								</div>
+							</article>
+
+							<!-- Tarjeta 3 (Biblioteca / Cultura) -->
+							<article id="cultura" class="searchable-item bg-udb-white rounded-xl overflow-hidden shadow-md group reveal flex flex-col h-full cursor-pointer">
+								<div class="relative h-48 overflow-hidden">
+									<span class="absolute top-3 left-3 bg-udb-blue text-udb-white text-[12px] font-bold px-2 py-1 rounded-sm uppercase tracking-wider z-10">CAMPUS</span>
+									<img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+										 onerror="this.src='https://placehold.co/800x600/1e293b/ffffff?text=Campus'"
+										 alt="Nueva biblioteca" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110">
+								</div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h3 class="text-[25px] font-bold text-udb-black mb-2 leading-snug group-hover:text-udb-blue transition-colors">
+										El campus inaugura la nueva biblioteca ecológica impulsada por energía solar
+									</h3>
+									<div class="text-[12px] text-gray-500 font-medium pt-3 border-t border-gray-100 mt-auto flex justify-between items-center uppercase">
+										<span>Redacción UDB</span>
+									</div>
+								</div>
+							</article>
+
+							<!-- Tarjeta 4 (Deportes) -->
+							<article id="deportes" class="searchable-item bg-udb-white rounded-xl overflow-hidden shadow-md group reveal flex flex-col h-full cursor-pointer">
+								<div class="relative h-48 overflow-hidden">
+									<span class="absolute top-3 left-3 bg-udb-gold text-udb-black text-[12px] font-bold px-2 py-1 rounded-sm uppercase tracking-wider z-10">DEPORTES</span>
+									<img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
+										 onerror="this.src='https://placehold.co/800x600/1e293b/ffffff?text=Deportes'"
+										 alt="Equipo de atletismo" class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-110">
+								</div>
+								<div class="p-5 flex flex-col flex-grow">
+									<h3 class="text-[25px] font-bold text-udb-black mb-2 leading-snug group-hover:text-udb-blue transition-colors">
+										Selección de Atletismo arrasa en las eliminatorias nacionales universitarias
+									</h3>
+									<div class="text-[12px] text-gray-500 font-medium pt-3 border-t border-gray-100 mt-auto flex justify-between items-center uppercase">
+										<span>Redacción UDB</span>
+									</div>
+								</div>
+							</article>
+						</div>
+					</div>
+
+					<!-- Sidebar (Lo más leído / Última hora) -->
+					<aside class="lg:col-span-4 mt-8 lg:mt-0 reveal">
+
+						<!-- Lo más leído -->
+						<div class="bg-udb-white rounded-xl shadow-md border-t-4 border-udb-gold p-6 mb-8">
+							<div class="flex items-center gap-2 border-b-2 border-gray-200 pb-2 mb-5">
+								<i class="ph-fill ph-trend-up text-udb-gold text-2xl"></i>
+								<h2 class="text-[25px] font-black text-udb-black uppercase">Lo más leído</h2>
+							</div>
+							<ul class="space-y-5">
+								<li class="group cursor-pointer flex gap-4 items-start searchable-item">
+									<span class="text-4xl font-black text-gray-200 group-hover:text-udb-gold transition-colors leading-none">1</span>
+									<div>
+										<h4 class="font-bold text-[14px] text-udb-black group-hover:text-udb-blue transition-colors leading-tight line-clamp-3">El Salvador despliega operación de rescate militar en Haití tras el secuestro de cuatro soldados de la fuerza multinacional.</h4>
+									</div>
+								</li>
+								<li class="group cursor-pointer flex gap-4 items-start searchable-item">
+									<span class="text-4xl font-black text-gray-200 group-hover:text-udb-gold transition-colors leading-none">2</span>
+									<div>
+										<h4 class="font-bold text-[14px] text-udb-black group-hover:text-udb-blue transition-colors leading-tight line-clamp-3">Nayib Bukele descarta la liberación de pandilleros: "Ningún miembro de estructura criminal va a salir libre. Nunca".</h4>
+									</div>
+								</li>
+								<li class="group cursor-pointer flex gap-4 items-start searchable-item">
+									<span class="text-4xl font-black text-gray-200 group-hover:text-udb-gold transition-colors leading-none">3</span>
+									<div>
+										<h4 class="font-bold text-[14px] text-udb-black group-hover:text-udb-blue transition-colors leading-tight line-clamp-3">Fiscalía de El Salvador solicita cadena perpetua en macrojuicio contra más de 560 miembros del Barrio 18.</h4>
+									</div>
+								</li>
+							</ul>
+						</div>
+
+						<!-- Última hora / Avisos -->
+						<div class="bg-udb-blue text-udb-white rounded-xl shadow-md p-6 relative overflow-hidden">
+							<div class="relative z-10">
+								<div class="flex items-center gap-2 mb-5">
+									<span class="relative flex h-3 w-3">
+									  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-udb-yellow opacity-75"></span>
+									  <span class="relative inline-flex rounded-full h-3 w-3 bg-udb-yellow"></span>
+									</span>
+									<h2 class="text-[25px] font-black uppercase tracking-wide">Última Hora</h2>
+								</div>
+								<div class="space-y-4">
+									<div class="border-l-4 border-udb-yellow pl-3 searchable-item">
+										<a href="#" class="font-bold text-[14px] hover:text-udb-yellow transition-colors block leading-snug">Fuerzas Especiales de El Salvador patrullan Haití para combatir a las pandillas.</a>
+									</div>
+									<div class="border-l-4 border-udb-yellow pl-3 searchable-item">
+										<a href="#" class="font-bold text-[14px] hover:text-udb-yellow transition-colors block leading-snug">Fiscalía salvadoreña pide cadena perpetua para 560 miembros del Barrio 18.</a>
+									</div>
+									<div class="border-l-4 border-udb-yellow pl-3 searchable-item">
+										<a href="#" class="font-bold text-[14px] hover:text-udb-yellow transition-colors block leading-snug">Gobierno propone cárcel para transportistas irresponsables en El Salvador.</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</aside>
+				</div>
+			</main>
+
+			<!-- FOOTER CON TEXTO EDITORIAL ACTUALIZADO -->
+			<footer class="bg-udb-black text-udb-white pt-12 mt-12 border-t-8 border-udb-blue">
+				<div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-10 mb-8">
+
+					<!-- Logo y Descripción -->
+					<div class="reveal">
+						<a href="#inicio" class="flex items-center gap-3 mb-4 group">
+							<div class="bg-udb-white p-1 rounded h-12 w-12 flex items-center justify-center overflow-hidden">
+								<img src="logo und.jpg" alt="Logo UDB" class="w-full h-full object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0833a2?text=UDB'">
+							</div>
+							<div class="flex flex-col leading-none">
+								<span class="font-black text-[25px] text-udb-white tracking-tight uppercase">UDB NOTICIAS</span>
+							</div>
+						</a>
+						<p class="text-[14px] text-gray-400 mb-4 leading-relaxed">
+							Periódico Digital Estudiantil. Información veraz, objetiva y de calidad al servicio de la comunidad universitaria y la sociedad salvadoreña.
+						</p>
+					</div>
+
+					<!-- Equipo Editorial (Actualizado) -->
+					<div class="reveal" style="transition-delay: 100ms;">
+						<h3 class="text-udb-yellow font-bold uppercase tracking-wider mb-4 text-[16px] border-b border-gray-800 pb-2">Equipo Editorial</h3>
+						<p class="text-[14px] text-gray-300 leading-relaxed mb-4 italic">
+							Laboratorio de Periodismo Digital. Comprometidos con la verdad, la ética profesional y la excelencia académica de nuestros estudiantes en la era de la información.
+						</p>
+						<ul class="space-y-2 text-[14px] text-gray-300 font-medium">
+							<li><strong class="text-udb-white">Director General:</strong> Àngela Zaldaña</li>
+							<li><strong class="text-udb-white">Jefe de Prensa:</strong> Samuel Rivera</li>
+							<li><strong class="text-udb-white">Editor en Jefe:</strong> Jeremy Rodrìguez</li>
+							<li><strong class="text-udb-white">Diseño UI/UX:</strong> Anderson Mejìa</li>
+							<li><strong class="text-udb-white">Fotografía:</strong> Colectivo Lente Universitario</li>
+						</ul>
+					</div>
+				</div>
+
+				<!-- Copyright -->
+				<div class="bg-[#0a0a0a] py-4 border-t border-gray-900">
+					<div class="max-w-7xl mx-auto px-4 text-center">
+						<p class="text-[12px] text-gray-500 font-bold uppercase tracking-widest">&copy; 2026 UDB Noticias. Todos los derechos reservados.</p>
+					</div>
+				</div>
+			</footer>
+
+			<!-- ================= MODALES ================= -->
+
+			<!-- MODAL 1 (Accidente) -->
+			<div id="modal-1" class="article-modal hidden-modal fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-udb-black/80 backdrop-blur-sm">
+				<div class="modal-content bg-udb-white w-full max-w-4xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col relative">
+					<button onclick="closeModal('modal-1')" class="absolute top-4 right-4 z-50 w-10 h-10 bg-udb-black/70 hover:bg-udb-blue text-udb-white rounded-full flex items-center justify-center transition-colors">
+						<i class="ph ph-x text-xl font-bold"></i>
+					</button>
+					<div class="overflow-y-auto overflow-x-hidden flex-grow relative">
+						<div class="w-full">
+							<img src="img/imagen 1.png" class="w-full object-cover" alt="Accidente"/>
+							<p class="text-[12px] text-gray-500 text-center py-2 bg-gray-100">Vista general del accidente y de los vehículos involucrados.</p>
+						</div>
+						<article class="p-6 md:p-12 max-w-3xl mx-auto text-udb-black">
+							<h1 class="text-[40px] font-black leading-tight mb-6 text-udb-blue uppercase">Fatal accidente de tránsito en el boulevard Constitución deja 2 fallecidos y al menos 13 lesionados</h1>
+							<div class="flex items-center gap-4 text-[12px] font-bold uppercase text-gray-500 mb-8 border-b border-gray-200 pb-4">
+								<span>Por Samuel Rivera</span> <span>|</span> <span>30 de septiembre de 2026</span>
+							</div>
+							<div class="text-[14px] leading-relaxed space-y-6">
+								<p class="font-bold text-lg">Un trágico suceso colapsó una de las principales arterias de la capital la mañana de este miércoles, cuando un vehículo de carga pesada perdió el control embistiendo a múltiples automóviles en su trayecto.</p>
+								<p>Vista general del accidente y de los vehículos involucrados.
+Equipos de emergencia atendiendo el accidente de tránsito
+Equipos de emergencia trabajan en la zona del accidente.
+Esta mañana, equipos de socorro recibieron una llamada para atender un fuerte accidente de tránsito en el bulevar Constitución, a la altura del Redondel Integración, en San Salvador.</p> 	
+<p>Según la información incluida en la noticia original, el accidente habría sido provocado por una volqueta que sufrió una falla en los frenos mientras circulaba de occidente a oriente. Las imágenes de seguridad de la zona mostrarían que el vehículo impactó primero contra un sedán blanco y después colisionó con otra volqueta, un camión y otros vehículos. El Cuerpo de Bomberos informó, según el documento proporcionado, que algunos de los vehículos involucrados se incendiaron y que el personal acudió para apagar las llamas.</p>
+								<div class="my-8">
+									<img src="img/imagen 2.png" class="w-full object-cover" alt="Equipos de emergencia"/>
+									<p class="text-[12px] text-gray-500 text-center mt-2 italic">Equipos de emergencia trabajan en la zona del accidente.</p>
+								</div>
+								<p>
+Cruz Roja Salvadoreña reportó que una mujer falleció en el lugar. La noticia la identifica como María Elisa Hernández Portillo, jueza de Vigilancia Penitenciaria y de Ejecución de la Pena en Chalatenango. Una segunda persona habría fallecido durante el traslado al hospital; su identidad no se había confirmado en el documento original.
+
+El conductor de la volqueta habría resultado lesionado y permanecía bajo custodia policial. Los demás heridos fueron trasladados al Hospital Nacional Zacamil. El documento no aporta información confirmada sobre su estado de salud.</p> <p>Este hecho vuelve a poner sobre la mesa la importancia de revisar las condiciones mecánicas de los vehículos de carga y de cumplir las normas de seguridad vial. También recuerda la responsabilidad de las empresas y los conductores de mantener sus unidades en buen estado para reducir el riesgo de tragedias.</p>
+							</div> 
+						</article>
+					</div>
+				</div>
+			</div>
+
+			<!-- MODAL 2 (Apopa) -->
+			<div id="modal-2" class="article-modal hidden-modal fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-udb-black/80 backdrop-blur-sm">
+				<div class="modal-content bg-udb-white w-full max-w-4xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col relative">
+					<button onclick="closeModal('modal-2')" class="absolute top-4 right-4 z-50 w-10 h-10 bg-udb-black/70 hover:bg-udb-blue text-udb-white rounded-full flex items-center justify-center transition-colors">
+						<i class="ph ph-x text-xl font-bold"></i>
+					</button>
+					<div class="overflow-y-auto overflow-x-hidden flex-grow relative">
+						<div class="w-full">
+						  <img src="img/imagen 3.png" class="w-full object-cover" alt="Siniestro vial"/>
+						  <p class="text-[12px] text-gray-500 text-center py-2 bg-gray-100">Escena del siniestro vial en el redondel Integración.</p>
+						</div>
+						<article class="p-6 md:p-12 max-w-3xl mx-auto text-udb-black">
+							<h1 class="text-[40px] font-black leading-tight mb-6 text-udb-blue uppercase">Juzgado de paz en Apopa ordena medidas sustitutivas en caso de accidente vial</h1>
+							<div class="flex items-center gap-4 text-[12px] font-bold uppercase text-gray-500 mb-8 border-b border-gray-200 pb-4">
+								<span>Por Àngela Zaldaña</span> <span>|</span> <span>22 de octubre de 2026</span>
+							</div>
+							<div class="text-[14px] leading-relaxed space-y-6">
+								<p class="font-bold text-lg">El proceso judicial derivado del trágico múltiple accidente registrado semanas atrás ha avanzado a su etapa de instrucción, con nuevas resoluciones emanadas desde los tribunales de la zona norte de San Salvador.</p>
+								<p>Siniestro vial en carretera con vehículos dañados, fuego y humo
+Escena del siniestro vial en el redondel Integración.
+Fotografías de los dos hombres señalados en el proceso judicial
+Personas señaladas en la investigación del caso.
+Apopa, El Salvador. El Juzgado de Paz de Apopa resolvió que Rudis Joel R. H., de 31 años, y Marvin Alexis H. R., de 27 años, enfrenten el proceso judicial con medidas sustitutivas a la detención, por el siniestro vial ocurrido en el redondel Integración, que dejó como resultado dos personas fallecidas y diez lesionadas. </p> 
+<p>De acuerdo con las investigaciones, Rudis Joel conducía una volqueta a 86.4 kilómetros por hora, con un exceso de carga de 11.3 toneladas y deficiencias en el sistema de frenos. Estas condiciones habrían provocado que impactara contra varios vehículos que se encontraban esperando incorporarse al redondel.</p> 
+								<div class="my-8">
+								  <img src="img/imagen 4.png" class="w-full object-cover" alt="Implicados"/>
+								  <p class="text-[12px] text-gray-500 text-center mt-2 italic">Personas señaladas en la investigación del caso.</p>
+								</div>
+								<p>Por su parte, Marvin Alexis, señalado como propietario de la empresa, es acusado de no garantizar que la unidad se encontrara en condiciones adecuadas para circular. La investigación indica que el vehículo habría sido registrado como cabezal y no como volqueta.</p> <p>Como parte de las medidas impuestas, el conductor deberá pagar una caución económica de $5,000, mientras que el propietario deberá cancelar $60,000. Ambos tendrán prohibido salir del país, deberán presentarse ante el juzgado cada 15 días y no podrán comunicarse con las víctimas ni con sus familiares. El caso continúa en el proceso judicial correspondiente, mientras las autoridades buscan esclarecer las responsabilidades relacionadas con este hecho, que dejó luto y preocupación entre las familias afectadas.</p> 
+							</div>
+						</article>
+					</div>
+				</div>
+			</div>
+
+			<!-- MODAL 3 (FMI) COMPLETADO -->
+			<div id="modal-3" class="article-modal hidden-modal fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-udb-black/80 backdrop-blur-sm">
+				<div class="modal-content bg-udb-white w-full max-w-4xl h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col relative">
+					<button onclick="closeModal('modal-3')" class="absolute top-4 right-4 z-50 w-10 h-10 bg-udb-black/70 hover:bg-udb-blue text-udb-white rounded-full flex items-center justify-center transition-colors">
+						<i class="ph ph-x text-xl font-bold"></i>
+					</button>
+					<div class="overflow-y-auto overflow-x-hidden flex-grow relative">
+						<div class="w-full">
+						  <img src="img/imagen 5.PNG" class="w-full object-cover" alt="FMI"/>
+						  <p class="text-[12px] text-gray-500 text-center py-2 bg-gray-100">Fondo Monetario Internacional y El Salvador.</p>
+						</div>
+						<article class="p-6 md:p-12 max-w-3xl mx-auto text-udb-black">
+							<h1 class="text-[40px] font-black leading-tight mb-6 text-udb-blue uppercase">El FMI lleva a cabo el acuerdo financiero en El Salvador para este trimestre</h1>
+							<div class="flex items-center gap-4 text-[12px] font-bold uppercase text-gray-500 mb-8 border-b border-gray-200 pb-4">
+								<span>Por Anderson Villanueva</span> <span>|</span> <span>22 de octubre de 2026</span>
+							</div>
+							<div class="text-[14px] leading-relaxed space-y-6">
+								<p class="font-bold text-lg">El Fondo Monetario Internacional (FMI) ha confirmado la continuidad de las mesas de diálogo y los acuerdos financieros proyectados para el último trimestre del año en El Salvador.</p>
+								<p>Esta medida busca fortalecer la estabilidad macroeconómica del país y plantear estrategias a largo plazo en materia fiscal y de inversión pública.</p>
+							</div>
+						</article>
+					</div>
+				</div>
+			</div>
+
+			<!-- ================= SCRIPTS ================= -->
+			<script>
+				document.addEventListener("DOMContentLoaded", () => {
+					// 1. Animaciones Scroll (Intersection Observer)
+					const reveals = document.querySelectorAll(".reveal");
+					const observer = new IntersectionObserver((entries) => {
+						entries.forEach(entry => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add("active");
+							}
+						});
+					}, { threshold: 0.1 });
+					reveals.forEach(reveal => observer.observe(reveal));
+
+					// 2. Menú Móvil Toggle
+					const btn = document.getElementById('mobile-menu-btn');
+					const menu = document.getElementById('mobile-menu');
+					btn.addEventListener('click', () => {
+						menu.classList.toggle('hidden');
+					});
+
+					// Cerrar menú móvil al hacer clic en un enlace
+					const mobileLinks = menu.querySelectorAll('a');
+					mobileLinks.forEach(link => {
+						link.addEventListener('click', () => {
+							menu.classList.add('hidden');
+						});
+					});
+
+					// 3. Sistema de Buscador Interactivo
+					const searchInputs = document.querySelectorAll('.search-input');
+					const articles = document.querySelectorAll('.searchable-item');
+
+					searchInputs.forEach(input => {
+						input.addEventListener('input', (e) => {
+							const searchTerm = e.target.value.toLowerCase().trim();
+
+							articles.forEach(article => {
+								const articleText = article.innerText.toLowerCase();
+								// Si el texto del artículo contiene la palabra buscada, lo mostramos; sino, lo ocultamos.
+								if (articleText.includes(searchTerm)) {
+									article.style.display = ''; 
+									article.style.opacity = '1';
+								} else {
+									article.style.display = 'none'; 
+								}
+							});
+						});
+					});
+				});
+
+				// 4. Funciones para Modales
+				function openModal(id) {
+					document.getElementById(id).classList.remove('hidden-modal');
+					document.getElementById(id).classList.add('active-modal');
+					document.body.style.overflow = 'hidden'; // Evitar scroll de fondo
+				}
+				function closeModal(id) {
+					document.getElementById(id).classList.add('hidden-modal');
+					document.getElementById(id).classList.remove('active-modal');
+					document.body.style.overflow = 'auto'; // Restaurar scroll
+				}
+			</script>
+		</body>
+		</html>
+
