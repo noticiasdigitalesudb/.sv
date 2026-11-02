@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#0833a2">
 <script>try{var t=localStorage.getItem('udb-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');document.documentElement.dataset.theme=t}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Figtree:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--blue:#0833a2;--deep:#061f66;--accent:#0833a2;--gold:#f5b800;--red:#e03a2f;--ink:#111629;--muted:#566080;--paper:#f3f5fb;--card:#fff;--line:#dfe4f1;--hbg:#0833a2;--fbg:#061f66;--display:'Bricolage Grotesque',system-ui,sans-serif;--body:'Figtree',system-ui,sans-serif}
 :root[data-theme=dark]{--accent:#9bb0ff;--ink:#eef1fb;--muted:#a0abcd;--paper:#0a0e1f;--card:#131a36;--line:#253058;--hbg:#0b1640;--fbg:#050917}
@@ -21,7 +21,7 @@ a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 .wrap{width:min(1200px,100% - 32px);margin-inline:auto}
- 
+
 header{background:var(--hbg);color:#fff;position:sticky;top:0;z-index:20}
 .hrow{display:flex;align-items:center;gap:6px;padding:10px 0 4px}
 .brand{display:flex;align-items:center;gap:12px;margin-right:auto;text-align:left}
@@ -37,7 +37,7 @@ nav button[aria-current=page]{border-color:var(--gold);opacity:1}
 .sbar{display:none;padding:6px 0 10px}
 .sbar.on{display:block}
 .sbar input{width:100%;padding:12px 18px;border-radius:999px;border:0;font:inherit;background:#fff;color:#111629}
- 
+
 .flash{background:var(--fbg);color:#fff;font-size:14px}
 .flash .wrap{display:flex;align-items:center;gap:16px;overflow-x:auto;scrollbar-width:none;padding-block:9px;white-space:nowrap}
 .flash strong{display:flex;align-items:center;gap:8px;color:var(--gold);flex:none}
@@ -46,10 +46,10 @@ nav button[aria-current=page]{border-color:var(--gold);opacity:1}
 .flash a{opacity:.9}
 .flash a:hover{opacity:1;text-decoration:underline}
 .flash a+a{padding-left:16px;border-left:1px solid rgba(255,255,255,.25)}
- 
+
 main{flex:1;padding:28px 0 56px}
 .top{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;margin-bottom:48px}
-.hero{position:relative;display:flex;align-items:flex-end;min-height:540px;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,var(--blue),var(--deep));color:#fff}
+.hero{position:relative;display:flex;align-items:flex-end;min-height:500px;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,var(--blue),var(--deep));color:#fff}
 .hero>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s}
 .hero:hover>img{transform:scale(1.03)}
 .hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(4,14,50,.94),rgba(4,14,50,.5) 55%,rgba(4,14,50,.05))}
@@ -57,8 +57,7 @@ main{flex:1;padding:28px 0 56px}
 .hero h1{font:800 clamp(28px,4.2vw,48px)/1.06 var(--display);letter-spacing:-.025em;margin:14px 0 12px;max-width:26ch}
 .hero p{max-width:60ch;opacity:.92}
 .hero .meta,.hero .meta b{color:#fff}
-.hero .chip{background:rgba(255,255,255,.16);backdrop-filter:blur(6px);padding:5px 12px;border-radius:999px}
- 
+
 .rank{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;align-self:start}
 .rank h2{font:800 24px var(--display);letter-spacing:-.02em;margin-bottom:6px}
 .rank ol{list-style:none;padding:0;counter-reset:r}
@@ -67,40 +66,78 @@ main{flex:1;padding:28px 0 56px}
 .rank li:first-child a{border-top:0}
 .rank a::before{content:counter(r);font:800 34px/1 var(--display);color:var(--accent)}
 .rank a:hover span{color:var(--accent)}
-.rank small{display:block;font-weight:500;color:var(--muted);margin-top:4px}
- 
+.rank small{display:block;margin-top:8px}
+
 .sh{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:4px 16px;margin-bottom:20px}
 .sh h2{font:800 clamp(26px,3.4vw,36px)/1.1 var(--display);letter-spacing:-.02em}
 .sh p{color:var(--muted)}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:24px}
-.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.grid.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 10px 28px rgba(8,20,70,.14);transform:translateY(-2px)}
 .media{aspect-ratio:16/10;overflow:hidden;background:linear-gradient(135deg,var(--blue),var(--deep))}
-.media img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.media img{width:100%;height:100%;object-fit:cover;object-position:center 30%;transition:transform .5s}
+.media.ph{display:grid;place-items:center;background:linear-gradient(135deg,var(--c,var(--blue)),var(--deep));color:rgba(255,255,255,.55)}
 .card:hover img{transform:scale(1.05)}
 .cb{padding:18px 20px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card h3{font:700 20px/1.2 var(--display);letter-spacing:-.01em}
 .card:hover h3{color:var(--accent)}
 .card p{color:var(--muted);font-size:15px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.chip{display:inline-flex;align-items:center;gap:7px;font-weight:700;font-size:13px;align-self:flex-start}
-.chip i{width:8px;height:8px;border-radius:50%}
 .meta{margin-top:auto;padding-top:10px;display:flex;flex-wrap:wrap;gap:2px 14px;font-size:13px;color:var(--muted)}
 .meta b{color:var(--ink)}
 .meta:empty{display:none}
+
+/* Categorías: etiqueta redondeada de color */
+.chips{display:flex;flex-wrap:wrap;gap:6px;align-self:flex-start}
+.chip{display:inline-flex;align-items:center;padding:4px 12px;border-radius:999px;font:800 11px/1.3 var(--body);letter-spacing:.07em;text-transform:uppercase;white-space:nowrap;background:var(--c,#1f63e0);color:var(--cc,#fff)}
+.chip.o{background:transparent;color:var(--muted);box-shadow:inset 0 0 0 1.5px currentColor}
+.hero .chip.o{color:#fff}
+.chip.sm{padding:3px 9px;font-size:10px}
+
 @media(min-width:900px){.wide{grid-column:span 2;flex-direction:row}.wide .media{flex:1.2;aspect-ratio:auto}.wide .cb{flex:1;justify-content:center;padding:28px}.wide h3{font-size:28px}}
- 
+
+.explore{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px}
+.explore button{display:flex;flex-direction:column;gap:4px;text-align:left;padding:20px;background:var(--card);border:1px solid var(--line);border-radius:14px;position:relative;transition:border-color .2s,transform .2s}
+.explore button:hover{border-color:var(--accent);transform:translateY(-2px)}
+.explore b{font:800 21px var(--display);letter-spacing:-.01em}
+.explore span{color:var(--muted);font-size:14px}
+.explore button::after{content:"→";position:absolute;right:18px;top:18px;font-weight:700;color:var(--accent)}
+.block{margin-top:56px}
+.soon .cb p{-webkit-line-clamp:unset}
+.soon .media{position:relative;display:grid;place-items:center;color:rgba(255,255,255,.7)}
+.soon iframe{width:100%;height:100%;border:0}
+
 .empty{text-align:center;padding:64px 16px;color:var(--muted)}
 .empty h3{font:700 22px var(--display);color:var(--ink);margin-bottom:6px}
 .btn{background:var(--blue);color:#fff;padding:10px 20px;border-radius:999px;font-weight:700;margin-top:16px}
- 
-footer{background:var(--fbg);color:#d6dcf5;padding:48px 0 24px}
-.fg{display:grid;grid-template-columns:1.2fr 1fr;gap:40px}
-footer h2{font:700 18px var(--display);color:#fff;margin-bottom:12px}
-footer p{max-width:46ch}
-footer dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:15px}
-footer dt{color:#fff;font-weight:700}
-footer dd{margin:0}
-.copy{margin-top:32px;padding-top:16px;border-top:1px solid rgba(255,255,255,.15);font-size:13px;opacity:.8}
- 
+
+/* Pie de página */
+footer{background:var(--fbg);color:#d6dcf5}
+.fband{display:flex;align-items:center;justify-content:space-between;gap:24px 40px;flex-wrap:wrap;padding:40px 0;border-bottom:1px solid rgba(255,255,255,.14)}
+.fband h2{font:800 clamp(22px,3vw,30px)/1.15 var(--display);color:#fff;letter-spacing:-.02em;max-width:22ch}
+.fband p{margin-top:6px;max-width:48ch;opacity:.85}
+.social{display:flex;gap:12px}
+.social a{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.1);color:#fff;transition:background .2s,color .2s,transform .2s}
+.social a:hover{background:var(--gold);color:#111629;transform:translateY(-3px)}
+.fg{display:grid;grid-template-columns:1.5fr 1fr 1.1fr 1.2fr;gap:40px;padding:48px 0 44px}
+footer h2.t{font:700 13px var(--body);letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.fbrand{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.fbrand .logo{width:44px;height:44px}
+.fbrand b{font:800 22px var(--display);color:#fff;letter-spacing:-.02em}
+footer p{max-width:44ch;font-size:15px}
+footer ul{list-style:none;padding:0;display:grid;gap:10px;font-size:15px}
+footer li button,footer li a{color:#d6dcf5;text-align:left;padding:0}
+footer li button:hover,footer li a:hover{color:#fff;text-decoration:underline}
+footer dl{display:grid;gap:12px;font-size:15px}
+footer dt{color:#8f9bd0;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+footer dd{margin:0;color:#fff;font-weight:500}
+.fcontact p+p{margin-top:10px}
+.fcontact a{color:#fff;text-decoration:underline}
+.copy{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;padding:20px 0 28px;border-top:1px solid rgba(255,255,255,.14);font-size:13px}
+.copy p{opacity:.8;max-width:none}
+.up{padding:8px 16px;border-radius:999px;background:rgba(255,255,255,.1);color:#fff;font-weight:700;font-size:13px}
+.up:hover{background:rgba(255,255,255,.2)}
+
 dialog{border:0;padding:0;background:var(--card);color:var(--ink);width:min(860px,100%);max-width:100%;height:94dvh;max-height:none;border-radius:20px;overflow:hidden;margin:auto}
 dialog[open]{display:flex;flex-direction:column}
 dialog::backdrop{background:rgba(5,10,35,.75);backdrop-filter:blur(4px)}
@@ -111,24 +148,38 @@ dialog::backdrop{background:rgba(5,10,35,.75);backdrop-filter:blur(4px)}
 .rs{overflow-y:auto;flex:1}
 figure img{width:100%}
 figcaption{font-size:13px;color:var(--muted);padding:8px 0}
-.cover figcaption{text-align:center;background:var(--paper)}
+.cover{background:#0b1230}
+.cover img{width:auto;max-width:100%;max-height:440px;margin:0 auto}
+.cover figcaption{text-align:center;background:var(--paper);padding:8px 16px}
 .art{padding:28px clamp(20px,6vw,64px) 40px;max-width:800px;margin:auto}
 .art h1{font:800 clamp(28px,4.5vw,42px)/1.1 var(--display);letter-spacing:-.02em;margin:12px 0 16px}
+.art h2{font:800 clamp(21px,3vw,26px)/1.2 var(--display);letter-spacing:-.01em;margin:36px 0 12px}
 .art .meta{padding:0 0 20px;margin-bottom:24px;border-bottom:1px solid var(--line);font-size:14px}
 .art p{font-size:18px;line-height:1.7;margin-bottom:20px;max-width:65ch}
+.art p.deck{font-size:20px;line-height:1.5;font-style:italic;color:var(--muted);margin:-4px 0 20px}
 .art p.lede{font-size:21px;font-weight:500;line-height:1.5}
+.art ol{font-size:18px;line-height:1.7;margin:0 0 20px;padding-left:1.4em;max-width:65ch}
+.art li{margin-bottom:6px}
 .art figure{margin:28px 0}
+.art figure img{width:auto;max-width:100%;max-height:560px;margin:0 auto;border-radius:10px}
+.art figcaption{text-align:center}
+.art .credit{font-style:italic;color:var(--muted);font-size:15px;margin-top:28px}
+.art .src{margin-top:32px;padding-top:18px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+.art .src h3{font:700 15px var(--display);color:var(--ink);margin-bottom:8px}
+.art .src ul{padding-left:1.2em}
+.art .src li{margin-bottom:6px}
+.art .src a{color:var(--accent);text-decoration:underline;word-break:break-word}
 .more{padding:8px clamp(20px,6vw,64px) 48px;border-top:1px solid var(--line)}
 .more .sh{margin:28px 0 16px}
 .more .sh h2{font-size:24px}
- 
-@media(max-width:960px){.top{grid-template-columns:1fr}.hero{min-height:440px}.fg{grid-template-columns:1fr}}
-@media(max-width:700px){dialog{height:100dvh;border-radius:0}.brand small{display:none}}
+
+@media(max-width:960px){.top{grid-template-columns:1fr}.hero{min-height:420px}.fg{grid-template-columns:1fr 1fr}.grid.g3{grid-template-columns:repeat(auto-fill,minmax(260px,1fr))}}
+@media(max-width:700px){dialog{height:100dvh;border-radius:0}.brand small{display:none}.fg{grid-template-columns:1fr;gap:32px}.fband{padding:32px 0}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
- 
+
 <header>
 	<div class="wrap">
 		<div class="hrow">
@@ -148,36 +199,80 @@ figcaption{font-size:13px;color:var(--muted);padding:8px 0}
 			<button data-sec="deportes">Deportes</button>
 			<button data-sec="cultura">Cultura</button>
 			<button data-sec="opinion">Opinión</button>
+			<button data-sec="multimedia">Multimedia</button>
 		</nav>
 	</div>
 </header>
- 
+
 <div class="flash"><div class="wrap" id="flash"></div></div>
- 
+
 <main class="wrap" id="main"></main>
- 
+
 <footer>
 	<div class="wrap">
-		<div class="fg">
+
+		<div class="fband">
 			<div>
-				<h2>UDB Noticias</h2>
-				<p>Periódico digital estudiantil. Información veraz, objetiva y de calidad al servicio de la comunidad universitaria y la sociedad salvadoreña.</p>
+				<h2>Síguenos en nuestras redes</h2>
+				<p>Entérate primero de las noticias del campus y del país, y comparte lo que pasa en la comunidad universitaria.</p>
 			</div>
-			<div>
-				<h2>Equipo editorial</h2>
-				<dl>
-					<dt>Directora general</dt><dd>Ángela Zaldaña</dd>
-					<dt>Jefe de prensa</dt><dd>Samuel Rivera</dd>
-					<dt>Editor en jefe</dt><dd>Jeremy Rodríguez</dd>
-					<dt>Diseño UI/UX</dt><dd>Anderson Mejía</dd>
-					<dt>Fotografía</dt><dd>Colectivo Lente Universitario</dd>
-				</dl>
+			<!-- Cambia cada href por la cuenta oficial de UDB Noticias, por ejemplo https://www.instagram.com/tu_usuario -->
+			<div class="social">
+				<a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram">
+					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+				</a>
+				<a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook">
+					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+				</a>
+				<a href="https://twitter.com/" target="_blank" rel="noopener noreferrer" aria-label="Twitter" title="Twitter">
+					<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+				</a>
 			</div>
 		</div>
-		<p class="copy">© 2026 UDB Noticias. Todos los derechos reservados.</p>
+
+		<div class="fg">
+			<div>
+				<div class="fbrand">
+					<img class="logo" src="logo und.jpg" alt="" onerror="this.remove()">
+					<b>UDB Noticias</b>
+				</div>
+				<p>Periódico digital estudiantil del Laboratorio de Periodismo Digital. Información veraz, objetiva y de calidad al servicio de la comunidad universitaria y la sociedad salvadoreña.</p>
+			</div>
+			<div>
+				<h2 class="t">Secciones</h2>
+				<ul>
+					<li><button data-sec="inicio">Inicio</button></li>
+					<li><button data-sec="actualidad">Actualidad</button></li>
+					<li><button data-sec="deportes">Deportes</button></li>
+					<li><button data-sec="cultura">Cultura</button></li>
+					<li><button data-sec="opinion">Opinión</button></li>
+					<li><button data-sec="multimedia">Multimedia</button></li>
+				</ul>
+			</div>
+			<div>
+				<h2 class="t">Equipo editorial</h2>
+				<dl>
+					<div><dt>Directora general</dt><dd>Ángela Zaldaña</dd></div>
+					<div><dt>Jefe de prensa</dt><dd>Samuel Rivera</dd></div>
+					<div><dt>Editor en jefe</dt><dd>Jeremy Rodríguez</dd></div>
+					<div><dt>Diseño UI/UX</dt><dd>Anderson Mejía</dd></div>
+					<div><dt>Fotografía</dt><dd>Colectivo Lente Universitario</dd></div>
+				</dl>
+			</div>
+			<div class="fcontact">
+				<h2 class="t">Nuestro compromiso</h2>
+				<p>Comprometidos con la verdad, la ética profesional y la excelencia académica de nuestros estudiantes en la era de la información.</p>
+				<p>Universidad Don Bosco<br>Soyapango, El Salvador<br><a href="https://www.udb.edu.sv" target="_blank" rel="noopener noreferrer">www.udb.edu.sv</a></p>
+			</div>
+		</div>
+
+		<div class="copy">
+			<p>© 2026 UDB Noticias. Todos los derechos reservados.</p>
+			<button class="up" onclick="scrollTo({top:0,behavior:'smooth'})">↑ Volver arriba</button>
+		</div>
 	</div>
 </footer>
- 
+
 <dialog id="reader" aria-label="Lectura de la noticia">
 	<div class="rtop">
 		<button data-x>Volver</button>
@@ -186,85 +281,425 @@ figcaption{font-size:13px;color:var(--muted);padding:8px 0}
 	</div>
 	<div class="rs" id="rs"></div>
 </dialog>
- 
+
 <script>
 /* ===== NOTICIAS =====
-   Para agregar una nota, copia un bloque y cambia sus datos.
-   sec: actualidad | deportes | cultura | opinion
-   img/s/body son opcionales. En body, cada texto es un párrafo y {img,cap} es una foto.
-   rank: puesto en "Lo más leído". flash: aparece en "Última hora". */
+   Para agregar una nota, copia un bloque y cambia sus datos. El orden de esta lista es el orden en que salen en cada sección.
+   sec:   actualidad | deportes | cultura | opinion
+   tag:   categoría principal (etiqueta de color). tag2: categoría secundaria (etiqueta con borde, opcional).
+   hero:  1 = noticia principal de Inicio.  flash: 1 = "Última hora".  rank: puesto en "Lo más leído".
+   s (subtítulo), by (autor), d (fecha AAAA-MM-DD), img/alt/cap (foto de portada), credit son opcionales.
+   En body, cada texto es un párrafo; también puedes usar {img,cap} (foto), {h} (subtítulo), {ol:[...]} (lista numerada) y {src:[{t,u}]} (fuentes). */
 const A=[
-{id:'accidente-boulevard-constitucion',sec:'actualidad',tag:'Sucesos',t:'Fatal accidente de tránsito en el boulevard Constitución deja 2 fallecidos y al menos 13 lesionados',s:'Un vehículo de carga pesada perdió el control y embistió a varios automóviles. Equipos de emergencia trabajan en la zona del accidente.',by:'Samuel Rivera',d:'2026-09-30',img:'img/imagen 1.png',alt:'Vista general del accidente',cap:'Vista general del accidente y de los vehículos involucrados.',body:['Un trágico suceso colapsó una de las principales arterias de la capital la mañana de este miércoles, cuando un vehículo de carga pesada perdió el control embistiendo a múltiples automóviles en su trayecto.','Esta mañana, equipos de socorro recibieron una llamada para atender un fuerte accidente de tránsito en el bulevar Constitución, a la altura del Redondel Integración, en San Salvador.',{img:'img/imagen 2.png',cap:'Equipos de emergencia trabajan en la zona del accidente.'}]},
-{id:'apopa-medidas-sustitutivas',sec:'actualidad',tag:'Sucesos',t:'Juzgado de paz en Apopa ordena medidas sustitutivas en caso de accidente vial',by:'Ángela Zaldaña',d:'2026-10-22',img:'img/imagen 3.png',alt:'Accidente vial en Apopa'},
-{id:'fmi-acuerdo-trimestre',sec:'actualidad',tag:'Economía',t:'El FMI lleva a cabo el acuerdo financiero en El Salvador para este trimestre',s:'Mesas de diálogo buscan fortalecer la estabilidad macroeconómica.',by:'Anderson Villanueva',d:'2026-10-22',img:'img/imagen 5.PNG',alt:'Reunión del FMI'},
-{id:'atletismo-eliminatorias',sec:'deportes',tag:'Deportes',t:'Selección de Atletismo arrasa en las eliminatorias nacionales universitarias',s:'Los atletas de la Universidad Don Bosco consiguieron 12 medallas de oro en las competencias celebradas durante el fin de semana.',by:'Redacción Deportes',d:'2026-10-24',img:'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=1000&q=75',alt:'Atletismo'},
-{id:'biblioteca-ecologica',sec:'cultura',tag:'Cultura',t:'El campus inaugura la nueva biblioteca ecológica impulsada por energía solar',s:'Un nuevo espacio cultural y de estudio sostenible abre sus puertas para la comunidad universitaria y visitantes.',by:'Redacción Cultura',d:'2026-10-20',img:'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1000&q=75',alt:'Biblioteca'},
-{id:'ia-educacion-superior',sec:'opinion',tag:'Opinión',t:'El reto de la Inteligencia Artificial en la educación superior',s:'Reflexiones sobre cómo las herramientas tecnológicas transforman el aprendizaje sin reemplazar la ética periodística ni el pensamiento crítico.',by:'Jeremy Rodríguez',d:'2026-10-18',img:'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=75',alt:'Escritura'},
-{id:'rescate-militar-haiti',sec:'actualidad',tag:'Internacional',rank:1,t:'El Salvador despliega operación de rescate militar en Haití tras el secuestro de cuatro soldados de la fuerza multinacional'},
-{id:'bukele-pandilleros',sec:'actualidad',tag:'Política',rank:2,t:'Nayib Bukele descarta la liberación de pandilleros: “Ningún miembro de estructura criminal va a salir libre. Nunca”'},
-{id:'fiscalia-barrio-18',sec:'actualidad',tag:'Justicia',rank:3,flash:1,t:'Fiscalía de El Salvador solicita cadena perpetua en macrojuicio contra más de 560 miembros del Barrio 18'},
-{id:'fuerzas-especiales-haiti',sec:'actualidad',tag:'Internacional',flash:1,t:'Fuerzas Especiales de El Salvador patrullan Haití para combatir a las pandillas'},
-{id:'carcel-transportistas',sec:'actualidad',tag:'Política',flash:1,t:'Gobierno propone cárcel para transportistas irresponsables en El Salvador'}
+{
+ "id": "accidente-boulevard-constitucion",
+ "sec": "actualidad",
+ "tag": "Sucesos",
+ "tag2": "El Salvador",
+ "hero": 1,
+ "t": "Fatal accidente de tránsito en el boulevard Constitución deja 2 fallecidos y al menos 13 lesionados",
+ "s": "Accidente involucró 14 vehículos.",
+ "by": "Samuel Rivera",
+ "d": "2026-10-20",
+ "img": "img/accidente-boulevard-constitucion-1.png",
+ "alt": "Equipos de emergencia en el boulevard Constitución",
+ "cap": "Equipos de emergencia trabajan en la zona del accidente.",
+ "body": [
+  "Esta mañana, equipos de socorro recibieron una llamada para atender un fuerte accidente de tránsito en el bulevar Constitución, a la altura del Redondel Integración, en San Salvador.",
+  "Según informan los equipos de socorro, el accidente habría sido provocado por una volqueta que sufrió una falla en los frenos mientras circulaba de occidente a oriente. Las imágenes de las cámaras de seguridad de la zona mostrarían que el vehículo impactó primero contra un sedán blanco y después colisionó con otra volqueta, un camión y otros vehículos.",
+  "El Cuerpo de Bomberos informó que algunos de los vehículos involucrados se incendiaron y que el personal acudió para apagar las llamas.",
+  "Cruz Roja Salvadoreña reportó que una mujer falleció en el lugar. La víctima fue identificada como María Elisa Hernández Portillo, jueza de Vigilancia Penitenciaria y de Ejecución de la Pena en Chalatenango. Una segunda persona habría fallecido durante el traslado al hospital y aún no ha sido identificada.",
+  "El conductor de la volqueta habría resultado lesionado y permanece bajo custodia policial. Los demás heridos fueron trasladados al Hospital Nacional Zacamil; por el momento no se tiene información sobre su estado de salud.",
+  "Este hecho vuelve a poner sobre la mesa la importancia de revisar las condiciones mecánicas de los vehículos de carga y de cumplir las normas de seguridad vial. También recuerda la responsabilidad de las empresas y los conductores de mantener sus unidades en buen estado para reducir el riesgo de tragedias."
+ ],
+ "credit": "Elaborado por: Ángela Zaldaña, Samuel Rivera, Jeremy Rodríguez y Anderson Mejía."
+},
+{
+ "id": "cierre-carretera-los-chorros",
+ "sec": "actualidad",
+ "tag": "Nacional",
+ "t": "Cierre del paso en carretera Los Chorros",
+ "s": "Según las autoridades correspondientes, el paso estaría cerrado todo el día; sin embargo, el tránsito se habilitó a las 9:30 a. m.",
+ "by": "Samuel Rivera",
+ "d": "2026-10-26",
+ "img": "img/cierre-carretera-los-chorros-1.png",
+ "alt": "Maquinaria en la carretera Los Chorros",
+ "cap": "Maquinaria trabajando en el tramo de la carretera Los Chorros.",
+ "body": [
+  "El Ministerio de Obras Públicas y Transporte (MOPT) informó que en la madrugada de este domingo se realizaron detonaciones en un tramo de la carretera Los Chorros para efectuar la voladura de un talud, con el objetivo de estabilizar los demás taludes que forman parte de la ampliación de dicha carretera. A través de canales oficiales, el director del MOPT, Romeo Rodríguez, informó los detalles del trabajo de demolición y confirmó que la remoción de escombros se realizó en la madrugada de este domingo con maquinaria y equipo técnico.",
+  "Por otra parte, el VMT estuvo monitoreando las detonaciones y los movimientos en la zona para evitar algún inconveniente. Como consecuencia del cierre, los automovilistas tuvieron que buscar rutas alternas, como la calle a Quezaltepeque o la calle al volcán, duplicando el tiempo y la distancia para llegar a su destino.",
+  {
+   "img": "img/cierre-carretera-los-chorros-2.png",
+   "cap": "Tramo de la carretera Los Chorros."
+  },
+  "Sin embargo, a las 9:30 a. m. del domingo el MOPT informó que, gracias a que se redoblaron los esfuerzos del equipo técnico y la maquinaria, se pudo terminar antes de lo previsto y el paso vehicular y peatonal quedó habilitado por completo, cumpliendo así con el trabajo antes de la hora prevista inicialmente."
+ ]
+},
+{
+ "id": "salvadorenos-desaparecidos-mision-haiti",
+ "sec": "actualidad",
+ "tag": "Internacional",
+ "t": "Cuatro salvadoreños destacados en la Misión Antipandillas en Haití se encuentran desaparecidos",
+ "s": "Tropas salvadoreñas en misión de rescate.",
+ "by": "Samuel Rivera",
+ "d": "2026-10-25",
+ "img": "img/salvadorenos-desaparecidos-mision-haiti-1.png",
+ "alt": "Tropas salvadoreñas en Haití",
+ "cap": "Tropas salvadoreñas se integran a la misión antipandillas en Haití.",
+ "body": [
+  "Cuatro aerotécnicos de la Fuerza Armada de El Salvador (FAES) fueron emboscados y atacados con armas de fuego y explosivos cuando transitaban por una comunidad de Puerto Príncipe, en Haití, el 18 de octubre pasado. A raíz de este suceso, el presidente de El Salvador, Nayib Bukele, tomó cartas en el asunto y mandó un mensaje a los secuestradores, que tuvo respuesta a través de un video donde el líder del grupo pandillero haitiano le dice que no le tienen miedo; por ello, el presidente envió elementos salvadoreños a Haití para llevar a cabo operaciones de rescate y combate.",
+  "Por otra parte, el periódico The New York Times informó que una misión humanitaria encontró cuatro restos calcinados en el aeropuerto de Haití que podrían ser los cuerpos de los cuatro soldados salvadoreños. Sin embargo, el presidente Nayib Bukele respondió a través de su cuenta de X que esos cuerpos, encontrados y entregados por una ONG, no corresponden a los soldados salvadoreños, y mencionó también que entre los restos se encontraron carnets de identificación y uniformes de militares de otros países.",
+  {
+   "img": "img/salvadorenos-desaparecidos-mision-haiti-2.png",
+   "cap": "Mensaje del presidente Nayib Bukele en X sobre los restos encontrados."
+  },
+  "Hasta el momento se han enviado 450 soldados salvadoreños tras la emboscada de sus compañeros para colaborar con la misión de rescate. Se les han unido batallones de otras naciones con equipos pesados, de artillería, así como colaboración de logística e inteligencia para dar con el paradero de los cuatro soldados salvadoreños, sin mayores resultados hasta hoy."
+ ]
+},
+{
+ "id": "fmi-reforma-pensiones",
+ "sec": "actualidad",
+ "tag": "Economía",
+ "t": "El Fondo Monetario Internacional (FMI) lleva a cabo el acuerdo financiero en El Salvador para reformar las pensiones en junio de 2027",
+ "s": "El acuerdo fue firmado el 3 de septiembre de 2026 y busca reformar el sistema de pensiones.",
+ "body": [
+  "El acuerdo fue firmado el 3 de septiembre de 2026. Esta reforma trae modificaciones en cuanto al tiempo de años cotizados, el aumento de la edad y la tasa de cotización. Actualmente la edad para pensionarse es de 60 años para los hombres y 55 para las mujeres, ambos con un tiempo de servicio de 25 años cotizados, de los cuales se ha venido deduciendo un porcentaje patronal del 7.5 % y del trabajador del 3 %, para un total de 10.5 % del salario que devenga el trabajador.",
+  "Esta reforma de pensiones ha pasado la evaluación técnica del FMI, con resultados positivos. La actividad ha avanzado por etapas, evaluándose como segunda revisión en octubre de 2025 y la tercera en febrero de 2026, las cuales siguen corrigiéndose a fin de cumplir el compromiso adquirido por parte del Gobierno.",
+  "Como es de conocimiento, la deuda del Estado con el fondo de pensiones de los cotizantes, a través de las AFP y el ISP, supera los 11 millones hasta agosto de 2026, lo cual preocupa a analistas económicos y organismos internacionales. Por ello se está haciendo la evaluación para la sostenibilidad del sistema; el debate sobre el rumbo de las pensiones en El Salvador es uno de los principales desafíos económicos y sociales para el próximo año."
+ ]
+},
+{
+ "id": "wilson-joseph-militares-haiti",
+ "sec": "actualidad",
+ "tag": "Internacional",
+ "flash": 1,
+ "t": "Wilson Joseph niega tener en su poder a los cuatro militares salvadoreños desaparecidos en Haití",
+ "img": "img/wilson-joseph-militares-haiti-1.jpeg",
+ "alt": "Wilson Joseph",
+ "cap": "Wilson Joseph niega tener en su poder a los cuatro militares desaparecidos.",
+ "body": [
+  "Wilson Joseph, señalado como presunto líder de la banda criminal Los 400, negó en un video difundido en redes sociales tener bajo su poder a los cuatro militares salvadoreños desaparecidos en Haití. Aseguró que no ha secuestrado a ningún integrante del contingente salvadoreño, aunque sus declaraciones no aclaran qué ocurrió con ellos. Sus familias esperan respuestas oficiales. La información continúa pendiente de confirmación oficial."
+ ]
+},
+{
+ "id": "accidente-el-zonte",
+ "sec": "actualidad",
+ "tag": "Sucesos",
+ "flash": 1,
+ "t": "Fuerte accidente de tránsito deja dos personas lesionadas en El Zonte",
+ "img": "img/accidente-el-zonte-1.jpeg",
+ "alt": "Accidente en El Zonte",
+ "cap": "Accidente de tránsito sobre la carretera Litoral, kilómetro 52, El Zonte.",
+ "body": [
+  "Un accidente de tránsito se registró sobre la carretera Litoral, kilómetro 52, en El Zonte, Chiltiupán, La Libertad, dejando de forma preliminar a dos personas lesionadas. No se han brindado detalles sobre su estado de salud ni sobre si fue necesario trasladarlas a un centro asistencial. Se espera información más amplia sobre las circunstancias del hecho y si hubo otros vehículos involucrados."
+ ]
+},
+{
+ "id": "saca-orden-de-libertad",
+ "sec": "actualidad",
+ "tag": "Justicia",
+ "flash": 1,
+ "t": "Emiten orden de libertad para el expresidente Elías Antonio Saca",
+ "img": "img/saca-orden-de-libertad-1.jpeg",
+ "alt": "Elías Antonio Saca",
+ "cap": "Elías Antonio Saca, expresidente de El Salvador.",
+ "body": [
+  "El expresidente Elías Antonio Saca vuelve a ser noticia tras conocerse la emisión de una orden de libertad el pasado 27 de octubre, luego de cumplir la condena de diez años de prisión por corrupción y desvío de fondos públicos. Saca gobernó entre 2004 y 2009 y fue condenado el 13 de septiembre de 2018 por el desvío y lavado de aproximadamente 301 millones de dólares; además se estableció una responsabilidad civil de unos 260 millones. Cumplir la condena no significa que las obligaciones económicas pendientes queden saldadas automáticamente."
+ ]
+},
+{
+ "id": "encuesta-aprobacion-bukele",
+ "sec": "actualidad",
+ "tag": "Política",
+ "rank": 1,
+ "t": "El 94 % de los salvadoreños aprueba la gestión del presidente Nayib Bukele",
+ "img": "img/encuesta-aprobacion-bukele-1.png",
+ "alt": "Nayib Bukele",
+ "cap": "El presidente Nayib Bukele en una intervención pública. Fotografía: El Diario El Salvador.",
+ "body": [
+  "Según una encuesta nacional de CID Gallup publicada el 28 de octubre de 2026, el 94 % de los salvadoreños consultados aprueba la gestión del presidente Nayib Bukele y el 91 % se siente orgulloso de tenerlo como presidente. La medición se realizó del 24 al 27 de octubre, con 600 entrevistas telefónicas a adultos, un margen de error de ±4 puntos y un nivel de confianza del 95 %. Los porcentajes corresponden a las respuestas recogidas por la firma encuestadora y no significan que exista una opinión unánime entre toda la población."
+ ]
+},
+{
+ "id": "encuesta-operacion-rescate-haiti",
+ "sec": "actualidad",
+ "tag": "Internacional",
+ "rank": 2,
+ "t": "El 86 % apoya la operación militar para rescatar a los cuatro técnicos desaparecidos en Haití",
+ "img": "img/encuesta-operacion-rescate-haiti-1.png",
+ "alt": "Personal militar salvadoreño en Haití",
+ "cap": "Personal militar salvadoreño participa en misión de rescate en Haití. Fotografía: La Prensa Gráfica.",
+ "body": [
+  "La misma encuesta de CID Gallup muestra que el 86 % apoya la operación para localizar y rescatar a los cuatro técnicos de aviación de la Fuerza Armada desaparecidos el 18 de octubre en las afueras de Puerto Príncipe. El 82 % dijo estar preocupado por la seguridad de los efectivos salvadoreños en Haití, el 51 % confía mucho en que serán rescatados con vida y el 68 % apoya que El Salvador mantenga o aumente su presencia en la misión internacional."
+ ]
+},
+{
+ "id": "aerotecnicos-desaparecidos-haiti",
+ "sec": "actualidad",
+ "tag": "Internacional",
+ "rank": 3,
+ "t": "Cuatro aerotécnicos salvadoreños siguen desaparecidos en Haití",
+ "img": "img/aerotecnicos-desaparecidos-haiti-1.png",
+ "alt": "Tropas salvadoreñas en Haití",
+ "cap": "Tropas salvadoreñas se integran a la misión antipandillas en Haití.",
+ "body": [
+  "Cuatro aerotécnicos de la Fuerza Armada fueron emboscados el 18 de octubre en una comunidad de Puerto Príncipe. El presidente Nayib Bukele envió tropas para las operaciones de rescate —ya son 450 soldados— y negó que cuatro restos calcinados hallados en el aeropuerto, según informó The New York Times, correspondan a los militares salvadoreños. Hasta ahora no hay resultados sobre su paradero."
+ ]
+},
+{
+ "id": "aguila-gana-el-clasico",
+ "sec": "deportes",
+ "tag": "Deportes",
+ "tag2": "Fútbol",
+ "t": "Águila gana el clásico nacional",
+ "s": "Los emplumados remontaron y se quedaron con los 3 puntos.",
+ "by": "Samuel Rivera",
+ "d": "2026-10-26",
+ "img": "img/aguila-gana-el-clasico-1.png",
+ "alt": "Afición de Águila en el estadio Barraza",
+ "cap": "La afición de Águila acompañó al equipo en el Barraza.",
+ "body": [
+  "Este fin de semana se jugó la edición 275 del clásico nacional de El Salvador entre Águila y Club Deportivo FAS. El encuentro trajo muchas emociones, goles, roces entre jugadores, polémicas y mucho más. Esta vez la afición se hizo presente en el Barraza, a pesar de que en encuentros anteriores no ha acompañado al equipo a raíz de los malos resultados obtenidos.",
+  "La tarde inició con muchas emociones, con la afición apoyando y gritando a todo pulmón por su equipo, y con este ambiente maravilloso comenzó el espectáculo.",
+  "Arrancó el partido y el equipo local jugaba mejor, pero en el minuto 18 se abrió el marcador a favor de FAS: con la mítica regla del ex jugador Edgar Medrano, anotó el primer gol y puso a ganar a los tigrillos. Águila buscó el empate dejando escapar varias oportunidades, pero a segundos de terminar la primera parte, en el minuto 45+2, Alexander Marquez anotó el gol del empate para los emplumados y puso tablas el marcador.",
+  {
+   "img": "img/aguila-gana-el-clasico-2.jpeg",
+   "cap": "Momento del clásico nacional entre Águila y FAS."
+  },
+  "En la segunda mitad se mantuvo la intensidad del partido y las polémicas; ambos equipos buscaban llevarse los 3 puntos, pero fue en el minuto 89 cuando Dixon Rivas aprovechó una asistencia de uno de sus compañeros y, con un remate de derecha, anotó el gol que puso a ganar a los emplumados y desató la alegría de toda la afición naranja. Ya en el tiempo agregado, Eduardo Cruz sentenció el partido con un cabezazo para el definitivo 3 a 1, desatando la euforia de la afición que había acompañado y alentado al equipo toda la tarde.",
+  {
+   "img": "img/aguila-gana-el-clasico-3.png",
+   "cap": "Águila 3-1 FAS: resultado final del clásico nacional."
+  },
+  "Con esa remontada, Club Deportivo Águila se queda con la edición 275 del clásico nacional y llega a 27 puntos en el torneo Apertura 2026."
+ ]
+},
+{
+ "id": "alianza-diego-vazquez",
+ "sec": "deportes",
+ "tag": "Deportes",
+ "tag2": "Fútbol",
+ "t": "Alianza presenta a Diego Vázquez como su nuevo técnico",
+ "img": "img/alianza-diego-vazquez-1.png",
+ "alt": "Diego Vázquez, nuevo técnico de Alianza",
+ "cap": "Alianza presenta a Diego Vázquez como su nuevo técnico.",
+ "body": [
+  "El Alianza ya tiene nuevo técnico. Presentaron a Diego Vázquez en el Cuscatlán para ponerse al frente del equipo en lo que resta del Apertura 2026 y buscar el boleto en el repechaje de la Concacaf.",
+  "Vázquez, estratega con recorrido en el Real Estelí nicaragüense y en la selección catracha, asume el banquillo albo tras la salida de Roberto Pompei. Pompei, quien venía dirigiendo desde la pretemporada, fue separado del cargo el jueves tras caer ante el FAS."
+ ]
+},
+{
+ "id": "cristiano-ronaldo-1000-goles",
+ "sec": "deportes",
+ "tag": "Deportes",
+ "tag2": "Fútbol",
+ "t": "¿Cristiano Ronaldo llegará a los 1,000 goles o la edad se lo impide?",
+ "body": [
+  "El astro portugués continúa con su impresionante racha anotadora en la Liga Árabe. A sus 41 años, Cristiano sigue sumando tantos oficiales y cada vez está más cerca de la histórica e inédita cifra de 1,000 goles en su carrera profesional, manteniendo al mundo del fútbol pendiente de su récord."
+ ]
+},
+{
+ "id": "italia-burka-niqab-escuelas",
+ "sec": "cultura",
+ "tag": "Cultura",
+ "tag2": "Internacional",
+ "t": "Italia prohíbe el uso del burka y el niqab en las escuelas y limita la proporción de niños con bajo dominio del italiano",
+ "body": [
+  "El Gobierno de Italia aprobó un decreto legislativo que contempla la prohibición del uso del burka y el niqab en los centros escolares, así como medidas para limitar la proporción de estudiantes que tienen poco o ningún dominio del idioma italiano.",
+  "El decreto fija un límite máximo del 30 % de alumnos con escaso conocimiento del idioma en las aulas, desde la educación primaria hasta el bachillerato. La primera ministra, Giorgia Meloni, quien ocupa el cargo desde octubre de 2022, presenta dichas medidas como instrumentos que promueven la integración y no la división cultural del país.",
+  "Entre los aspectos contemplados en el decreto se encuentra la distinción entre las prendas islámicas. La prohibición no incluye el hiyab, que deja el rostro al descubierto, pero sí el uso del niqab, que cubre el rostro, excepto la zona de los ojos, y del burka, que cubre todo el cuerpo y el rostro con una malla que permite ver a través de ella.",
+  "Según datos de la Fundación ISMU, los estudiantes extranjeros representan un 11,6 % del total de estudiantes en las escuelas. El decreto también detalla que es deber de los centros escolares informar a los servicios sociales cuando las barreras lingüísticas entre los padres, los niños y los tutores dificulten la integración escolar del menor, ofreciendo cursos gratuitos de italiano.",
+  "Italia ya contaba con directrices que fomentaban el aprendizaje del idioma nacional en las escuelas. Sin embargo, con este decreto, el Gobierno busca convertir estas disposiciones en obligaciones legales. La aplicación definitiva dependerá de los próximos días, cuando se lleve a cabo el procedimiento de ratificación parlamentaria correspondiente.",
+  {
+   "src": [
+    {
+     "t": "Italia prohíbe el burka y el niqab en las escuelas y limita el número de niños que no hablen italiano en las aulas",
+     "u": "https://www.bbc.com/mundo/articles/cje3rr1lkrv7o"
+    },
+    {
+     "t": "ANSA",
+     "u": "https://www.ansa.it/english/news/politics/2026/09/24/cabinet-oks-foreign-pupil-cap-burqa-ban_69bcd062-e7fb-470b-9012-3036d68518c8.html"
+    }
+   ]
+  }
+ ]
+},
+{
+ "id": "dormir-poco-riesgo-silencioso",
+ "sec": "cultura",
+ "tag": "Artículo",
+ "tag2": "Salud",
+ "t": "Dormir poco, un riesgo silencioso: los efectos de la falta de sueño en la salud",
+ "s": "Especialistas advierten que dormir menos de siete horas al día puede afectar la concentración, el estado de ánimo y el funcionamiento del organismo, aumentando el riesgo de desarrollar enfermedades a largo plazo.",
+ "img": "img/dormir-poco-riesgo-silencioso-1.jpg",
+ "alt": "Persona durmiendo",
+ "cap": "Foto cortesía de Magnific.",
+ "body": [
+  {
+   "h": "Introducción"
+  },
+  "Dormir debe ser una de las actividades más naturales e importantes del ser humano. Pero para millones de personas se ha convertido en un lujo.",
+  "El trabajo, los estudios, el uso excesivo de los dispositivos electrónicos y el estrés del día a día hacen que cada vez más personas pierdan horas de descanso sin saber las consecuencias que esto puede traer.",
+  "Si bien se considera normal dormir cinco o seis horas por noche, los especialistas alertan que la falta de sueño puede afectar el funcionamiento del cerebro, debilitar el sistema inmunológico y aumentar el riesgo de sufrir enfermedades graves. El presente trabajo tiene como objetivo estudiar el efecto de la carencia de sueño sobre la salud física y mental, así como sobre el rendimiento en las actividades cotidianas (National Heart, Lung, and Blood Institute [NHLBI], s. f.).",
+  {
+   "h": "Una problemática cada vez más frecuente"
+  },
+  "La Fundación Nacional del Sueño y el Instituto Nacional del Corazón, los Pulmones y la Sangre de Estados Unidos indican que un adulto debe dormir entre siete y nueve horas por noche para estar saludable (National Sleep Foundation, s. f.). Pero millones de personas duermen menos por las largas jornadas laborales, por los estudios, por el estrés o por el uso excesivo de los teléfonos celulares y de las computadoras antes de irse a dormir.",
+  "La luz de las pantallas durante la noche disminuye la producción de melatonina, generando una pérdida de la hormona que regula el ciclo del sueño, lo que impide que el cuerpo logre un descanso profundo y reparador. Uno de los primeros en verse afectados es el cerebro.",
+  "Los efectos de no dormir lo suficiente se hacen sentir enseguida. Varios estudios han demostrado que, tras varias noches con pocas horas de descanso, se reduce la capacidad de concentración, la memoria y la rapidez para tomar decisiones.",
+  "Los especialistas explican que durante el sueño el cerebro organiza la información que se aprendió durante el día y fortalece las conexiones neuronales relacionadas con el aprendizaje. Cuando el proceso se interrumpe, el rendimiento académico y laboral se reduce de manera muy importante.",
+  "Como estudiantes, esto puede derivar en una menor comprensión de los contenidos, problemas a la hora de memorizar información y así tener un incremento de los errores en las evaluaciones.",
+  {
+   "h": "Consecuencias para la salud emocional"
+  },
+  "La investigación también encuentra una relación fuerte entre la carencia de sueño y la salud mental. Quienes duermen poco son más irritables, ansiosos, estresados y tienen cambios de humor más bruscos. Varios estudios médicos también señalan que la falta continua de sueño eleva la probabilidad de padecer trastornos depresivos y dificulta el control adecuado de las emociones, también pudiendo generar diferentes tipos de adicciones, como el café o bebidas energizantes. Los psicólogos indican que, al no dormir lo suficiente, el cerebro pierde parte de su capacidad para modular las respuestas emocionales y, por lo tanto, reaccionamos de forma más intensa ante situaciones de la vida cotidiana.",
+  {
+   "h": "Enfermedades que se pueden ir desarrollando con el tiempo"
+  },
+  "Los efectos no se limitan al cansancio. La evidencia científica demuestra que dormir menos de lo recomendado durante largos períodos aumenta el riesgo de padecer enfermedades cardiovasculares, hipertensión arterial, obesidad y diabetes tipo 2. Durante el sueño, el organismo regula la presión arterial, produce hormonas esenciales y fortalece el sistema inmunológico.",
+  "Cuando el descanso es insuficiente, estos procesos dejan de funcionar correctamente, favoreciendo la aparición de enfermedades crónicas. Asimismo, las personas con falta de sueño suelen presentar mayor sensación de hambre debido a alteraciones hormonales, lo que favorece el aumento de peso.",
+  {
+   "h": "El peligro en las calles y los lugares de trabajo"
+  },
+  "Otro aspecto preocupante es el incremento de accidentes relacionados con la somnolencia. Los Centros para el Control y la Prevención de Enfermedades (CDC, 2024) advierten que conducir con sueño disminuye los reflejos y afecta la capacidad para reaccionar ante situaciones inesperadas.",
+  "En algunos casos, permanecer despierto durante más de 18 horas puede afectar el desempeño de manera similar a conducir bajo los efectos del alcohol. En los ambientes laborales también aumenta la probabilidad de cometer errores, especialmente en profesiones donde se operan vehículos, maquinaria pesada o equipos médicos.",
+  {
+   "h": "¿Cómo prevenir este problema?"
+  },
+  "Especialistas recomiendan adoptar hábitos sencillos para mejorar la calidad del sueño:",
+  {
+   "ol": [
+    "Dormir entre siete y nueve horas al día.",
+    "Tener una rutina regular a la hora de acostarse y levantarse.",
+    "No usar dispositivos electrónicos al menos una hora antes de ir a dormir.",
+    "Bajar el consumo de cafeína en la tarde y noche.",
+    "Hacer ejercicio de forma regular.",
+    "Tener el dormitorio oscuro, silencioso y con una temperatura agradable."
+   ]
+  },
+  {
+   "h": "Conclusión"
+  },
+  "No dormir bien es un problema de salud pública que, por lo general, pasa inadvertido. Si bien muchas personas piensan que es normal dormir pocas horas para cumplir con sus obligaciones, los estudios demuestran que esto tiene importantes consecuencias sobre la memoria, el aprendizaje, la salud emocional y el funcionamiento del organismo del cuerpo humano. No es que dormir sea una pérdida de tiempo; es más bien una necesidad biológica, indispensable para tener una buena calidad de vida. Adoptar hábitos saludables al dormir ayuda a prevenir enfermedades, a tener un mejor desempeño en las actividades cotidianas y favorece el bienestar físico y mental de la población."
+ ]
+},
+{
+ "id": "las-leyendas-estan-desapareciendo",
+ "sec": "opinion",
+ "tag": "Opinión",
+ "t": "¿Las leyendas están desapareciendo?",
+ "body": [
+  "Las historias que contaban nuestros abuelos y que provocaban miedo, curiosidad o incredulidad en quienes las escuchaban; personajes que aparecían en la madrugada, caminos abandonados y ruidos extraños en medio de la oscuridad. Leyendas como las del Cipitío, la Siguanaba y el Cadejo están dejando de formar parte de la tradición oral. ¿Cuándo fue la última vez que escuchaste uno de estos relatos sin que fuera opacado por el sonido de una notificación en el teléfono?",
+  {
+   "h": "¿Siguen los niños escuchando estas historias?"
+  },
+  "La transformación de la esfera del entretenimiento ha sido evidente y ha llevado a cambios significativos en nuestros hábitos culturales. Desde el auge de las plataformas de streaming hasta los videojuegos y las redes sociales, las opciones de entretenimiento se han multiplicado, permitiéndonos elegir entre una infinidad de contenidos.",
+  "Sin embargo, esta abundancia también puede tener consecuencias. La sobreestimulación y la necesidad constante de consumir contenido nuevo pueden dificultar que prestemos atención a actividades más sencillas, como sentarnos una noche a escuchar historias.",
+  "La muerte cultural puede producirse por el descuido, el desinterés o la destrucción. La primera ocurre cuando una cultura cae en la obsolescencia, como si se encaminara hacia su propia desaparición debido a la pérdida de identidad. En una sociedad donde el contenido disponible nos permite conocer otras culturas y desear formar parte de ellas, puede surgir una crisis de identidad. Esto no es negativo por sí mismo, pero se convierte en un problema cuando conocer lo ajeno nos lleva a perder el interés por lo propio.",
+  "La muerte cultural por desinterés, por otra parte, ocurre cuando las costumbres y las tradiciones dejan de despertar curiosidad. Los gustos cambian con el tiempo, las modas van y vienen, y las tendencias se extienden rápidamente a través de las redes sociales. Como consecuencia, algunas expresiones culturales pierden relevancia y dejan de transmitirse entre generaciones.",
+  "Por último, la destrucción cultural se produce cuando una fuerza externa amenaza la continuidad de una cultura, como ocurrió en numerosos procesos de conquista y colonización. Aunque sus causas sean diferentes, estos tres fenómenos nos recuerdan que ninguna tradición está completamente a salvo de desaparecer si deja de practicarse, transmitirse o protegerse.",
+  "Incluso las historias de nuestros abuelos pueden perderse con el paso de los años si dejan de despertar interés frente a la inmensa cantidad de contenido que ofrece el entretenimiento actual.",
+  "Esta pérdida también puede relacionarse con los prejuicios hacia lo propio y la preferencia por lo extranjero. Basta con observar el interés que despiertan muchas películas de terror estadounidenses frente al conocimiento que tenemos de nuestras propias leyendas. No hay nada malo en disfrutar de producciones extranjeras; el problema surge cuando consideramos que lo que viene de fuera es automáticamente mejor y terminamos despreciando aquello que forma parte de nuestra identidad.",
+  "Una sociedad que se avergüenza de su propia cultura corre el riesgo de abandonarla. Y cuando dejamos de contar nuestras historias, no solo olvidamos personajes como el Cipitío, la Siguanaba o el Cadejo: también perdemos una parte de la memoria colectiva que nos conecta con quienes estuvieron antes que nosotros.",
+  "La próxima vez que tengas un rato libre, podrías escuchar las historias que tus abuelos tienen para contarte y compartirlas con alguien más. Quizá la próxima gran tendencia no tenga que venir de otro país. Quizá podamos crear una propia: la de mantener vivas nuestras leyendas y transmitirlas a las siguientes generaciones.",
+  {
+   "src": [
+    {
+     "u": "https://revistavenamerica.com/cambios-y-evolucion-del-entretenimiento-en-la-ultima-decada/"
+    },
+    {
+     "u": "https://www.elsalvador.com/h-opinion/h-editoriales/cultura-/1202689/2025/"
+    }
+   ]
+  }
+ ]
+}
 ];
- 
-const SEC={actualidad:['Actualidad','Lo que pasa en El Salvador y el mundo'],deportes:['Deportes','Resultados y protagonistas del deporte universitario'],cultura:['Cultura y arte','Ideas, espacios y personas del campus'],opinion:['Opinión','Ideas y reflexiones de nuestra comunidad']};
-const COL={Sucesos:'#e03a2f','Economía':'#12a57a',Internacional:'#2f7bff','Política':'#8a5cf6',Justicia:'#d9822b',Deportes:'#f5b800',Cultura:'#c04fd6','Opinión':'#ef6c3a'};
- 
+
+const SEC={actualidad:['Actualidad','Lo que pasa en El Salvador y el mundo'],deportes:['Deportes','Resultados y protagonistas del deporte'],cultura:['Cultura','Ideas, espacios y personas'],opinion:['Opinión','Ideas y reflexiones de nuestra comunidad'],multimedia:['Multimedia','Videos y contenido audiovisual']};
+
+/* Videos de Multimedia. Cuando los tengas, pega el código del video de YouTube en yt (lo que va después de v=) */
+const V=[{t:'Video 1',yt:''},{t:'Video 2',yt:''},{t:'Video 3',yt:''}];
+
+/* Color de cada categoría: [fondo, texto] */
+const COL={Sucesos:['#c9302a','#fff'],'Economía':['#0b7a5a','#fff'],Internacional:['#1f63e0','#fff'],'Política':['#7547e0','#fff'],Justicia:['#a65a14','#fff'],Nacional:['#0e7490','#fff'],Deportes:['#f5b800','#111629'],Cultura:['#a63bbd','#fff'],'Opinión':['#c24615','#fff'],'Artículo':['#475569','#fff']};
+
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-const norm=s=>(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+const norm=s=>(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const fmt=d=>new Date(d+'T12:00:00').toLocaleDateString('es',{day:'numeric',month:'long',year:'numeric'});
-const mins=a=>Math.max(1,Math.round(a.body.filter(x=>typeof x=='string').join(' ').split(/\s+/).length/200));
-const byDate=(x,y)=>(y.d||'').localeCompare(x.d||'');
-const chip=a=>`<span class="chip"><i style="background:${COL[a.tag]||'#2f7bff'}"></i>${a.tag}</span>`;
+const paras=a=>(a.body||[]).flatMap(x=>typeof x=='string'?[x]:x.ol||[]);
+const mins=a=>Math.max(1,Math.round(paras(a).join(' ').split(/\s+/).length/200));
+const ex=a=>a.s||(typeof (a.body||[])[0]=='string'?a.body[0]:'');
+const chip=(a,c='')=>{const [bg,fg]=COL[a.tag]||['#1f63e0','#fff'];return `<span class="chips"><span class="chip ${c}" style="--c:${bg};--cc:${fg}">${a.tag}</span>${a.tag2?`<span class="chip o ${c}">${a.tag2}</span>`:''}</span>`};
 const meta=a=>`<div class="meta">${a.by?`<b>${a.by}</b>`:''}${a.d?`<span>${fmt(a.d)}</span>`:''}${a.body?`<span>${mins(a)} min de lectura</span>`:''}</div>`;
-const media=a=>a.img?`<div class="media"><img loading="lazy" src="${a.img}" alt="" onerror="this.remove()"></div>`:'';
-const card=(a,c='')=>`<a class="card ${c}" href="#${a.id}">${media(a)}<div class="cb">${chip(a)}<h3>${a.t}</h3>${a.s?`<p>${a.s}</p>`:''}${meta(a)}</div></a>`;
+const ICON='<svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h13a2 2 0 0 1 2 2v14H6a2 2 0 0 1-2-2V4z"/><path d="M19 9h2v9a2 2 0 0 1-2 2"/><path d="M8 8h7M8 12h7M8 16h4"/></svg>';
+const media=a=>a.img?`<div class="media"><img loading="lazy" src="${a.img}" alt="" onerror="this.remove()"></div>`:`<div class="media ph" style="--c:${(COL[a.tag]||[])[0]||'#0833a2'}">${ICON}</div>`;
+const card=(a,c='')=>`<a class="card ${c}" href="#${a.id}">${media(a)}<div class="cb">${chip(a)}<h3>${a.t}</h3>${ex(a)?`<p>${ex(a)}</p>`:''}${meta(a)}</div></a>`;
 const head=(t,s)=>`<div class="sh"><h2>${t}</h2>${s?`<p>${s}</p>`:''}</div>`;
- 
+const PLAY='<svg viewBox="0 0 24 24" width="54" height="54" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m10 8.5 6 3.5-6 3.5z" fill="currentColor"/></svg>';
+const vcard=v=>`<div class="card soon"><div class="media">${v.yt?`<iframe loading="lazy" src="https://www.youtube.com/embed/${v.yt}" title="${v.t}" allowfullscreen></iframe>`:PLAY}</div><div class="cb"><h3>${v.t}</h3>${v.yt?'':'<p>Próximamente.</p>'}</div></div>`;
+
 let sec='inicio',q='';
- 
+
 function render(){
 	$$('nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.sec==sec&&!q?'page':'false'));
 	let h;
 	if(q){
-		const r=A.filter(a=>norm([a.t,a.s,a.by,a.tag].join(' ')).includes(norm(q))).sort(byDate);
+		const r=A.filter(a=>norm([a.t,a.s,a.by,a.tag,a.tag2,paras(a).join(' ')].join(' ')).includes(norm(q)));
 		h=head('Resultados para «'+esc(q)+'»',r.length+(r.length==1?' noticia':' noticias'))+(r.length?`<div class="grid">${r.map(a=>card(a)).join('')}</div>`:`<div class="empty"><h3>No encontramos nada para «${esc(q)}»</h3><p>Revisa la ortografía o prueba con una palabra más general.</p><button class="btn" id="clr">Borrar búsqueda</button></div>`);
 	}else if(sec=='inicio'){
-		const f=A[0],rk=A.filter(a=>a.rank).sort((x,y)=>x.rank-y.rank),rest=A.filter(a=>a.img&&a!==f).sort(byDate);
-		h=`<section class="top"><a class="hero" href="#${f.id}"><img src="${f.img}" alt="${f.alt}" onerror="this.remove()"><div>${chip(f)}<h1>${f.t}</h1><p>${f.s}</p>${meta(f)}</div></a><aside class="rank"><h2>Lo más leído</h2><ol>${rk.map(a=>`<li><a href="#${a.id}"><span>${a.t}<small>${a.tag}</small></span></a></li>`).join('')}</ol></aside></section>`
-		+head('Últimas noticias')+`<div class="grid">${rest.map((a,i)=>card(a,i?'':'wide')).join('')}</div>`;
+		/* Inicio: solo lo más importante (noticia principal, lo más leído y última hora). El resto está en cada sección. */
+		const f=A.find(a=>a.hero),rk=A.filter(a=>a.rank).sort((x,y)=>x.rank-y.rank),fl=A.filter(a=>a.flash);
+		h=`<section class="top"><a class="hero" href="#${f.id}"><img src="${f.img}" alt="${esc(f.alt||'')}" onerror="this.remove()"><div>${chip(f)}<h1>${f.t}</h1><p>${ex(f)}</p>${meta(f)}</div></a><aside class="rank"><h2>Lo más leído</h2><ol>${rk.map(a=>`<li><a href="#${a.id}"><span>${a.t}<small>${chip(a,'sm')}</small></span></a></li>`).join('')}</ol></aside></section>`
+		+head('Última hora','Lo último que está pasando')+`<div class="grid g3">${fl.map(a=>card(a)).join('')}</div>`
+		+`<section class="block">${head('Más noticias','Explora cada sección')}<div class="explore">${Object.keys(SEC).filter(k=>k!='multimedia').map(k=>{const n=A.filter(a=>a.sec==k).length;return `<button data-sec="${k}"><b>${SEC[k][0]}</b><span>${n} ${n==1?'noticia':'noticias'}</span></button>`}).join('')}<button data-sec="multimedia"><b>Multimedia</b><span>Videos</span></button></div></section>`;
+	}else if(sec=='multimedia'){
+		h=head(...SEC[sec])+`<div class="grid">${V.map(vcard).join('')}</div>`;
 	}else{
-		h=head(...SEC[sec])+`<div class="grid">${A.filter(a=>a.sec==sec).sort(byDate).map(a=>card(a)).join('')}</div>`;
+		const r=A.filter(a=>a.sec==sec);
+		h=head(...SEC[sec])+(r.length?`<div class="grid">${r.map(a=>card(a)).join('')}</div>`:`<div class="empty"><h3>Aún no hay notas en esta sección</h3><p>Vuelve pronto.</p></div>`);
 	}
 	$('#main').innerHTML=h;
 	const c=$('#clr');if(c)c.onclick=clearQ;
 }
 function clearQ(){q='';$('#q').value='';render()}
- 
+
 $('#flash').innerHTML='<strong><span class="dot"></span>Última hora</strong>'+A.filter(a=>a.flash).map(a=>`<a href="#${a.id}">${a.t}</a>`).join('');
- 
-/* Navegación */
-$$('[data-sec]').forEach(b=>b.onclick=()=>{sec=b.dataset.sec;clearQ();scrollTo({top:0})});
- 
+
+/* Navegación (también funciona con los botones que se crean después, como los de "Más noticias" y el pie de página) */
+document.addEventListener('click',e=>{const b=e.target.closest('[data-sec]');if(!b)return;sec=b.dataset.sec;clearQ();scrollTo({top:0})});
+
 /* Búsqueda */
 const sbar=$('#sf'),qi=$('#q');
 $('#sb').onclick=()=>{const on=sbar.classList.toggle('on');$('#sb').setAttribute('aria-expanded',on);if(on)qi.focus();else clearQ()};
 qi.addEventListener('input',e=>{q=e.target.value.trim();render()});
 qi.addEventListener('keydown',e=>{if(e.key=='Escape'){sbar.classList.remove('on');$('#sb').setAttribute('aria-expanded',false);clearQ()}});
- 
+
 /* Tema */
 $('#th').onclick=()=>{const t=document.documentElement.dataset.theme=='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('udb-theme',t)}catch(e){}};
- 
+
 /* Lector de notas */
 const dlg=$('#reader'),rs=$('#rs');
+function bodyHtml(a){
+	if(!a.body)return `<p class="lede">${a.s||'Estamos preparando la nota completa. Vuelve pronto para leerla.'}</p>`;
+	let first=!a.s;
+	return a.body.map(x=>{
+		if(typeof x=='string'){const c=first?' class="lede"':'';first=false;return `<p${c}>${x}</p>`}
+		if(x.img)return `<figure><img src="${x.img}" alt="${esc(x.cap||'')}" onerror="this.closest('figure').remove()"><figcaption>${x.cap||''}</figcaption></figure>`;
+		if(x.h)return `<h2>${x.h}</h2>`;
+		if(x.ol)return `<ol>${x.ol.map(i=>`<li>${i}</li>`).join('')}</ol>`;
+		if(x.src)return `<aside class="src"><h3>Fuentes</h3><ul>${x.src.map(s=>`<li>${s.t?s.t+(s.u?' — ':''):''}${s.u?`<a href="${s.u}" target="_blank" rel="noopener noreferrer">${s.u}</a>`:''}</li>`).join('')}</ul></aside>`;
+		return '';
+	}).join('');
+}
 function openNote(id){
 	const a=A.find(x=>x.id==id);if(!a)return;
-	const body=a.body?a.body.map((x,i)=>typeof x=='string'?`<p${i?'':' class="lede"'}>${x}</p>`:`<figure><img src="${x.img}" alt="${x.cap}" onerror="this.closest('figure').remove()"><figcaption>${x.cap}</figcaption></figure>`).join(''):`<p class="lede">${a.s||'Estamos preparando la nota completa. Vuelve pronto para leerla.'}</p>`;
-	const more=A.filter(x=>x!==a&&x.img).sort((x,y)=>(y.sec==a.sec)-(x.sec==a.sec)).slice(0,2);
-	rs.innerHTML=(a.img?`<figure class="cover"><img src="${a.img}" alt="${a.alt||''}" onerror="this.closest('figure').remove()">${a.cap?`<figcaption>${a.cap}</figcaption>`:''}</figure>`:'')
-	+`<article class="art">${chip(a)}<h1>${a.t}</h1>${meta(a)}${body}</article>`
-	+`<section class="more">${head('Sigue leyendo')}<div class="grid">${more.map(x=>card(x)).join('')}</div></section>`;
+	/* Sugerencias al final de la nota: primero las de la misma sección */
+	const more=A.filter(x=>x!==a).sort((x,y)=>(y.sec==a.sec)-(x.sec==a.sec)||(!!y.img-!!x.img)).slice(0,2);
+	rs.innerHTML=(a.img?`<figure class="cover"><img src="${a.img}" alt="${esc(a.alt||'')}" onerror="this.closest('figure').remove()">${a.cap?`<figcaption>${a.cap}</figcaption>`:''}</figure>`:'')
+	+`<article class="art">${chip(a)}<h1>${a.t}</h1>${a.s&&a.body?`<p class="deck">${a.s}</p>`:''}${meta(a)}${bodyHtml(a)}${a.credit?`<p class="credit">${a.credit}</p>`:''}</article>`
+	+`<section class="more">${head('Sigue leyendo más noticias')}<div class="grid">${more.map(x=>card(x)).join('')}</div></section>`;
 	if(!dlg.open)dlg.showModal();
 	rs.scrollTop=0;$('#prog').style.width='0';
 }
@@ -280,9 +715,8 @@ $('#share').onclick=async e=>{
 		else{await navigator.clipboard.writeText(location.href);b.textContent='Enlace copiado';setTimeout(()=>b.textContent='Compartir',2000)}
 	}catch(err){}
 };
- 
+
 render();route();
 </script>
 </body>
 </html>
- 
